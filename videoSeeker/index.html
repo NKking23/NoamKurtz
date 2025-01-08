@@ -1,32 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Viewer</title>
+    <style>
+        #videoContainer {
+            height: 100%;
+            width: 100%;
+        }
+
+        #videoContainer #vid {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <video id="vid" style="height: 100%; width:100%;"></video>
+    <div id="videoContainer"><video id="vid" style="height: 100%; width:100%;"></video></div>
     <script>
-        function getparam(param){
+        function getparam(param) {
             var url = new URL(window.location.href);
             return url.searchParams.get(param);
         }
         var src = ""
         var vid = document.querySelector("#vid")
         const width = screen.availWidth
-        window.onload = ()=>{
-            src = getparam("src").length>0 ? getparam("src"):"https://www.w3schools.com/Html/mov_bbb.mp4"
+        window.onload = () => {
+            src = getparam("src") != null ? getparam("src") : "https://www.w3schools.com/Html/mov_bbb.mp4"
             vid.src = src
         }
-        function setSrc (sr) {
+        function setSrc(sr) {
             vid.src = sr
         }
-        document.body.onmousemove = (e)=>{
+        document.body.onmousemove = (e) => {
             var x = e.clientX
-            var frac = x/width
-            vid.currentTime = frac*vid.duration
+            var frac = x / width
+            vid.currentTime = frac * vid.duration
         }
     </script>
 </body>
+
 </html>
