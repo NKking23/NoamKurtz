@@ -6,13 +6,17 @@
     <title>Video Viewer</title>
 </head>
 <body>
-    <video id="vid" style="height: 100%;"></video>
+    <video id="vid" style="height: 100%; width:100%;"></video>
     <script>
+        function getparam(param){
+            var url = new URL(window.location.href);
+            return url.searchParams.get(param);
+        }
         var src = ""
         var vid = document.querySelector("#vid")
         const width = screen.availWidth
         window.onload = ()=>{
-            src = "https://www.w3schools.com/Html/mov_bbb.mp4"
+            src = getparam("src").length>0 ? getparam("src"):"https://www.w3schools.com/Html/mov_bbb.mp4"
             vid.src = src
         }
         function setSrc (sr) {
