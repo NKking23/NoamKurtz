@@ -48,7 +48,7 @@
                 return;
             }
 
-            statusText.innerText = "Submitting request...";
+            statusText.innerText = "שולח פרומפט לשרת...";
             imageContainer.style.display = "none";
 
             const submitUrl = "https://stablehorde.net/api/v2/generate/async";
@@ -66,11 +66,11 @@
                 let jobId = data.id;
 
                 if (!jobId) {
-                    statusText.innerText = "Error submitting job.";
+                    statusText.innerText = "תקלת תקשורת עם השרת";
                     return;
                 }
 
-                statusText.innerText = "Waiting for image to be generated...";
+                statusText.innerText = "מייצר תמונה...";
 
                 // Polling for job completion
                 const statusUrl = `https://stablehorde.net/api/v2/generate/status/${jobId}`;
@@ -86,15 +86,15 @@
                         imageElement.src = imageUrl;
                         downloadLink.href = imageUrl;
                         imageContainer.style.display = "block";
-                        statusText.innerText = "Image ready!";
+                        statusText.innerText = "התמונה מוכנה!";
                         break;
                     }
 
-                    statusText.innerText = "Still generating...";
+                    statusText.innerText = "עדיין מחולל...";
                 }
 
             } catch (error) {
-                statusText.innerText = "Error occurred!";
+                statusText.innerText = "תקלה!";
                 console.error(error);
             }
         }
