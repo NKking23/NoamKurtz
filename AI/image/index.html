@@ -17,11 +17,11 @@
 
     <h2>מחולל תמונות בבינה מלאכותית <small><a href="instructions.txt">הוראות</a></small></h2>
 
-    <label>API Key (Optional):</label><br>
-    <input type="text" id="api-key" placeholder="Enter API key (optional)"><br>
+    <label>קוד API</label><br>
+    <input type="text" id="api-key" placeholder="הזן קוד API"><br>
 
-    <label>Prompt:</label><br>
-    <input type="text" id="prompt" placeholder="Describe your image" required><br>
+    <label>פרומפט:</label><br>
+    <input type="text" id="prompt" placeholder="מה בתמונה?" required><br>
 
     <button onclick="generateImage()">Generate</button>
 
@@ -42,7 +42,7 @@
             const imageElement = document.getElementById("generated-image");
             const downloadLink = document.getElementById("download-link");
 
-            if (!prompt) {
+            if (!prompt or !apiKey) {
                 alert("Please enter a prompt.");
                 return;
             }
