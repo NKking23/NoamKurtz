@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Horde Image Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { margin: 10px; padding: 10px; font-size: 16px; }
+        #status { margin-top: 10px; font-weight: bold; }
+        #image-container { margin-top: 20px; display: none; }
+        img { max-width: 100%; border: 1px solid #ddd; border-radius: 8px; }
+      a { display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Stable Horde Image Generator</h2>
+
+    <label>API Key (Optional):</label><br>
+    <input type="text" id="api-key" placeholder="Enter API key (optional)"><br>
+
+    <label>Prompt:</label><br>
+    <input type="text" id="prompt" placeholder="Describe your image" required><br>
+
+    <button onclick="generateImage()">Generate</button>
+
+    <p id="status"></p>
+
+    <div id="image-container">
+        <h3>Generated Image:</h3>
+        <img id="generated-image" src="" alt="Generated Image">
+        <a id="download-link" download="generated_image.png">Download Image</a>
+    </div>
+
+    <script>
+        async function generateImage() {
+            const apiKey = document.getElementById("api-key").value.trim();
+            const prompt = document.getElementById("prompt").value.trim();
+            const statusText = document.getElementById("status");
+            const imageContainer = document.getElementById("image-container");
+            const imageElement = document.getElementById("generated-image");
+            const downloadLink = document.getElementById("download-link");
+
+            if (!prompt) {
+                alert("Please enter a prompt.");
+                return;
+            }
+
+            statusText.innerText = "Submitting request...";
+            imageContainer.style.display = "none";
+
+            const submitUrl = "https://stablehorde.net/api/v2/generate/async";
+            const headers = apiKey ? { "apikey": apiKey } : {};
+            const payload = { prompt: prompt, params: { steps: 20 } };
+
+            try {
+                let response = await fetch(submitUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", ...headers },
+                    body: JSON.stringify(payload)
+                });
+
+                let data = await response.json();
+                let jobId = data.id;
+
+                if (!jobId) {
+                    statusText.innerText = "Error submitting job.";
+                    return;
+                }
+
+                statusText.innerText = "Waiting for image to be generated...";
+
+                // Polling for job completion
+                const statusUrl = `https://stablehorde.net/api/v2/generate/status/${jobId}`;
+
+                while (true) {
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+
+                    let jobResponse = await fetch(statusUrl);
+                    let jobData = await jobResponse.json();
+
+                    if (jobData.done) {
+                        let imageUrl = jobData.generations[0].img;
+                        imageElement.src = imageUrl;
+                        downloadLink.href = imageUrl;
+                        imageContainer.style.display = "block";
+                        statusText.innerText = "Image ready!";
+                        break;
+                    }
+
+                    statusText.innerText = "Still generating...";
+                }
+
+            } catch (error) {
+                statusText.innerText = "Error occurred!";
+                console.error(error);
+            }
+        }
+    </script>
+
+</body>
+</html>
 
