@@ -47,10 +47,6 @@
             statusText.innerText = "שולח פרומפט לשרת...";
             imageContainer.style.display = "none";
 
-            const submitUrl = "https://stablehorde.net/api/v2/generate/async";
-            const headers = apiKey ? { "apikey": apiKey } : {};
-            const payload = { prompt: prompt, params: { steps: 20 } };
-
             try {
               var output= ""
               fetch ("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q="+prompt).then(x=>{
