@@ -3,7 +3,7 @@
 ## 1️⃣ קבלת מזהה משתמש (API Key)
 כדי להשתמש בשירות מחולל התמונות, עליך לקבל מזהה משתמש (API Key).
 
-1. כדי לקבל את המזהה, לך לכתובת [https://stablehorde.net/get-api-key](https://stablehorde.net/get-api-key).
+1. כדי לקבל את המזהה, לך לכתובת [https://stablehorde.net/get-api-key](https://stablehorde.net/register).
 2. לחץ על **Get Your API Key**.
 3. לאחר מכן, תוכל לבחור להתחבר באמצעות חשבון **Google**, **Discord** או **GitHub**.
 4. ברגע שתתחבר, תקבל את מזהה ה-API. שמור אותו במקום בטוח, מכיוון שלא ניתן לשחזר אותו אם תאבד אותו.
