@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Horde Image Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { margin: 10px; padding: 10px; font-size: 16px;}
+        input { width: 70%; }
+        #status { margin-top: 10px; font-weight: bold; }
+        #image-container { margin-top: 20px; display: none; }
+        img { max-width: 100%; border: 1px solid #ddd; border-radius: 8px; }
+      a { display: block; margin-top: 10px; }
+    </style>
+</head>
+<body style="direction:rtl;">
 
+    <h2>מחולל תמונות בבינה מלאכותית <small><a href="https://github.com/NKking23/NoamKurtz/blob/main/AI/image/instructions.md">הוראות</a></small></h2>
+
+    <label>פרומפט</label><br>
+    <input type="text" id="prompt" placeholder="מה בתמונה? (יש להזין באנגלית בלבד)" required><br>
+
+    <button onclick="generateImage()">יאללה, תמונה!</button>
+
+    <p id="status"></p>
+
+    <div id="image-container">
+        <h3>תמונה סופית:</h3>
+        <img id="generated-image" src="" alt="Generated Image">
+        <a id="download-link" download="generated_image.png">Download Image</a>
+    </div>
+
+    <script>
+
+        async function generateImage() {
+            const prompt = encodeURIComponent(document.getElementById("prompt").value.trim())
+            const statusText = document.getElementById("status");
+            const imageContainer = document.getElementById("image-container");
+            const imageElement = document.getElementById("generated-image");
+            const downloadLink = document.getElementById("download-link");
+            if (!prompt) {
+                alert("בינה מלאכותית חכמה מאוד, אך עדיין לא יכולה לקרוא מחשבות. \nמה התמונה?");
+                return;
+            }
+
+            statusText.innerText = "שולח פרומפט לשרת...";
+            imageContainer.style.display = "none";
+
+            const submitUrl = "https://stablehorde.net/api/v2/generate/async";
+            const headers = apiKey ? { "apikey": apiKey } : {};
+            const payload = { prompt: prompt, params: { steps: 20 } };
+
+            try {
+              var output= ""
+              fetch ("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q="+prompt).then(x=>{
+                fetch("https://script.google.com/macros/s/AKfycbxJp5DswayUqC5oVEMnnzRU-Np5Xj-2lfrazGNI-jRkqWLCQDUV4ql-V72v_T8SRaL4vw/exec?prompt="+x).then(y=>{
+                  output=y})})
+              console.log(output)
+            } catch (error) {
+                statusText.innerText = "תקלה!";
+                console.error(error);
+            }
+        }
+    </script>
+
+</body>
+</html>
