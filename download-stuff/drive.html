@@ -7,6 +7,7 @@
       const urlParams = new URLSearchParams(queryString);
       const name = urlParams.get('l');
       document.getElementById("a").href = "https://drive.google.com/uc?export=download&id="+name
+      window.location.replace("https://drive.google.com/uc?export=download&id="+name)
     </script>
   </body>
 </html>
