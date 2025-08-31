@@ -1,41 +1,12 @@
 <!DOCTYPE HTML>
 <html>
   <body>
-    <p id="p"></p>
+    <a id="a">download</a>
     <script>
-      window.onload = function() {
-    try {
-        document.getElementById("p").innerText = "working";
-        // Get the URL and its search parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const driveLink = urlParams.get('l');
-
-        // Check if the 'l' parameter exists
-        if (driveLink) {
-            // A robust way to extract the file ID from various link formats
-            const regex = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/(?:document|presentation|spreadsheets)\/d\/)([a-zA-Z0-9_-]+)/;
-            const match = driveLink.match(regex);
-            
-            if (match && match[1]) {
-            
-                const fileId = match[1];
-                
-                // Construct the download URL
-                const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-                
-                // Redirect the user to the download link
-                window.location.replace(downloadUrl);
-
-            } else {
-                console.error('Error: The provided URL does not appear to be a valid Google Drive link.');
-            }
-        } else {
-            console.log('No "l" URL parameter found. Please append a valid Google Drive link to this URL.');
-        }
-    } catch (error) {
-        console.error('An unexpected error occurred:', error);
-    }
-};
+      const queryString = window.location.search; // Returns "?name=John&age=30"
+      const urlParams = new URLSearchParams(queryString);
+      const name = urlParams.get('l');
+      document.getElementById("a").href = name
     </script>
   </body>
 </html>
