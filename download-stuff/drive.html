@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
 <html>
   <body>
+    <p id="p"></p>
     <script>
       window.onload = function() {
     try {
+        document.getElementById("p").innerText = "working";
         // Get the URL and its search parameters
         const urlParams = new URLSearchParams(window.location.search);
         const driveLink = urlParams.get('l');
@@ -15,13 +17,14 @@
             const match = driveLink.match(regex);
             
             if (match && match[1]) {
+            
                 const fileId = match[1];
                 
                 // Construct the download URL
                 const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
                 
                 // Redirect the user to the download link
-                window.location.href = downloadUrl;
+                window.location.replace(downloadUrl);
 
             } else {
                 console.error('Error: The provided URL does not appear to be a valid Google Drive link.');
